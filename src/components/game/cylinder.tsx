@@ -1,4 +1,6 @@
 "use client";
+import { useGameData } from "@/hooks/useGameContext";
+import { PlayerActionMessage } from "@/lib/actions/playerActions";
 import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
@@ -7,7 +9,6 @@ interface CylinderProps {
   chamberCount: number;
   bulletPlacement?: number;
   chamberSize?: number;
-  
   onClick?: () => void;
 }
 
@@ -16,6 +17,7 @@ export const Cylinder = (props: CylinderProps) => {
   const cylinderRef = useRef<HTMLDivElement | null>(null);
   const rotationAngle = (2 * Math.PI) / props.chamberCount;
   const rotationAngleDegrees = rotationAngle * (180 / Math.PI);
+  const { canShoot, sendMessage } = useGameData();
   function positions() {
     const positions = [];
     const size = 20 * (props.chamberSize || 1);
@@ -36,25 +38,25 @@ export const Cylinder = (props: CylinderProps) => {
     }
     return "bg-slate-50";
   };
+
   useEffect(() => {
     // Update rotation based on isFlipped
     setRotateZ(-rotationAngleDegrees * props.chamberPosition);
-    console.log(-rotationAngleDegrees * props.chamberPosition);
   }, [props.chamberPosition, rotationAngleDegrees]);
 
   return (
     <motion.div
       ref={cylinderRef}
-      className={`rounded-full bg-gray-800 cursor-pointer`}
+      className={`rounded-full bg-gray-800 ${canShoot ? "animate-pulse cursor-pointer" : ""}`}
       style={{
         willChange: "transform",
         transform: "translateZ(0)",
         height: `${chamberSize * 4}rem`,
         width: `${chamberSize * 4}rem`,
-        z: 1000
+        z: 1000,
       }}
-      animate={{ 
-        rotateZ, 
+      animate={{
+        rotateZ,
         scale: [1.2, 1],
       }}
       transition={{

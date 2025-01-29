@@ -1,11 +1,7 @@
 "use client";
 
-interface GameMenuProps {
-}
+interface GameMenuProps {}
 
 export const GameMenu = (props: GameMenuProps) => {
-
-  return (
-    <></>
-  );
+  return <></>;
 };

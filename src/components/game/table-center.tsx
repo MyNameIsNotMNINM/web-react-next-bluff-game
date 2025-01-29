@@ -1,12 +1,21 @@
 "use client";
+import { CardTypes } from "@/lib/actions/playerActions";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { Card } from "./card";
+import { useGameData } from "@/hooks/useGameContext";
+import { ShowEvent } from "@/lib/actions/showEvent";
 
-export default function Table(props: {
+export default function TableCenter(props: {
   cardAmount: number;
   cardsToShow: string[];
+  cardType?: CardTypes;
 }) {
   const [stackRotation, setStackRotation] = useState<number[]>([0, 0, 0, 0, 0]);
+  const CardTypes = { JK: "🤡", A: "♥️", Q: "♠️", K: "♦️" };
+  const { sendMessage, gameState, roundState, endTurnTime, showEvent } =
+    useGameData();
+
   // const [flipped, setFlipped] = useState(false);
   // const [position, setPosition] = useState<number>(0);
 
@@ -42,19 +51,22 @@ export default function Table(props: {
             ></motion.div>
           );
         })}
-        {/* <motion.div className="flex gap-2 scale-125 p-5 bg-slate-200 bg-opacity-40 rounded-lg backdrop-blur-sm sm:bg-transparent sm:backdrop-blur-none" style={{}}>
-          {new Array(3).fill(0).map((_, i) => {
-            return <CardFlipper key={i} delay={i * 0.4} />;
-          })}
-        </motion.div> */}
-        {/* <Cylinder
-          onClick={advancePosition}
-          chamberPosition={position}
-          chamberCount={6}
-          chamberSize={3}
-          bulletPlacement={5}
-        /> */}
+        <Reveal showEvent={showEvent} />
       </div>
     </div>
+  );
+}
+
+function Reveal(props: { showEvent: ShowEvent | null }) {
+  if (props.showEvent?.type != "REVEAL_CARDS") return;
+  return (
+    <motion.div
+      className="flex gap-2 scale-125 p-5 bg-slate-200 bg-opacity-40 rounded-lg backdrop-blur-sm sm:bg-transparent sm:backdrop-blur-none"
+      style={{}}
+    >
+      {props.showEvent.payload.cards.map((c, i) => {
+        return <Card key={i} delay={i * 0.4} cardType={c} front />;
+      })}
+    </motion.div>
   );
 }
