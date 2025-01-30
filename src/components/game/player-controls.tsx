@@ -6,7 +6,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CardTypes } from "@/lib/actions/playerActions";
 import { Button } from "../ui/button";
 import { Card } from "./card";
-import { useGameData } from "@/hooks/useGameContext";
+import { useGameData } from "@/hooks/useGameData";
+import { useIdToken } from "react-firebase-hooks/auth";
+import { auth } from "@/lib/auth/firebase";
 
 interface PlayerControlsProps {
   active: boolean;
@@ -35,6 +37,8 @@ export default function PlayerControls(props: PlayerControlsProps) {
 
 function MobileControls(props: PlayerControlsProps) {
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
+  const [user, loading, error] = useIdToken(auth);
+  const { canShoot } = useGameData();
   const maxSelections = 3;
   const CardTypes = { JK: "🤡", A: "♥️", Q: "♠️", K: "♦️" };
   const toggleSelection = (index: number) => {
@@ -80,6 +84,7 @@ function MobileControls(props: PlayerControlsProps) {
             chamberSize={0.7}
             chamberPosition={props.chamberPosition || 0}
             chamberCount={6}
+            isSelectable={canShoot}
             onClick={props.onShoot}
           />
           <div className="flex gap-1">
@@ -92,8 +97,8 @@ function MobileControls(props: PlayerControlsProps) {
           </div>
         </div>
         <Avatar className="size-28">
-          <AvatarImage src={"https://github.com/shadcn.png"} />
-          <AvatarFallback>{"cn"}</AvatarFallback>
+          <AvatarImage src={"https://robohash.org/" + user?.uid} />
+          <AvatarFallback>{user?.uid}</AvatarFallback>
         </Avatar>
       </div>
       <div className="absolute right-[1.5rem] bottom-0 z-30 flex flex-col justify-center gap-2 -top-[2rem]">
@@ -161,10 +166,14 @@ function MobileControls(props: PlayerControlsProps) {
 
 function DesktopControls(props: PlayerControlsProps) {
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
+  const [user, loading, error] = useIdToken(auth);
+
   const maxSelections = 3;
+  const { canShoot } = useGameData();
 
   const toggleSelection = (index: number) => {
     const found = selectedCards.indexOf(index);
+
     if (found == -1) {
       if (selectedCards.length >= maxSelections) selectedCards.shift();
       setSelectedCards([...selectedCards, index]);
@@ -230,6 +239,7 @@ function DesktopControls(props: PlayerControlsProps) {
             chamberSize={0.7}
             chamberPosition={props.chamberPosition || 0}
             chamberCount={6}
+            isSelectable={canShoot}
             onClick={props.onShoot}
           />
           <div className="flex gap-1">
@@ -242,8 +252,8 @@ function DesktopControls(props: PlayerControlsProps) {
           </div>
         </div>
         <Avatar className="size-28">
-          <AvatarImage src={"https://github.com/shadcn.png"} />
-          <AvatarFallback>{"cn"}</AvatarFallback>
+          <AvatarImage src={"https://robohash.org/" + user?.uid} />
+          <AvatarFallback>{user?.uid}</AvatarFallback>
         </Avatar>
       </div>
       <div className="relative scale-50 sm:scale-100 flex gap-1 justify-center items-center h-20 sm:h-40 w-[33rem]">

@@ -3,7 +3,7 @@ import { CardTypes } from "@/lib/actions/playerActions";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { Card } from "./card";
-import { useGameData } from "@/hooks/useGameContext";
+import { useGameData } from "@/hooks/useGameData";
 import { ShowEvent } from "@/lib/actions/showEvent";
 
 export default function TableCenter(props: {

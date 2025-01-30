@@ -2,6 +2,7 @@
 import { motion } from "motion/react";
 import { Ref, useEffect, useRef, useState } from "react";
 import { Cylinder } from "./cylinder";
+import { useGameData } from "@/hooks/useGameData";
 
 interface CylinderTransitionProps {
   chamberPosition: number;
@@ -16,6 +17,8 @@ export const CylinderTransition = (props: CylinderTransitionProps) => {
   const [fixedCylinder, setFixedCylinder] = useState(false);
   const [fixedCylinderPos, setFixedCylinderPos] = useState({ x: 0, y: 0 });
   const fixedCylinderRef = useRef<HTMLDivElement | undefined>(undefined);
+  const { canShoot } = useGameData();
+
   const variants = {
     visible: {
       translateX: "-50%",
@@ -67,6 +70,7 @@ export const CylinderTransition = (props: CylinderTransitionProps) => {
           chamberPosition={props.chamberPosition}
           chamberCount={props.chamberCount}
           bulletPlacement={props.bulletPlacement}
+          isSelectable={canShoot}
           chamberSize={props.chamberSize || 2}
         />
       </div>

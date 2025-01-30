@@ -1,13 +1,16 @@
 import PlayerControls from "./player-controls";
 import TableCenter from "./table-center";
 import { useEffect, useState } from "react";
-import { useGameData } from "@/hooks/useGameContext";
+import { useGameData } from "@/hooks/useGameData";
 import { Ennemies } from "@/components/game/enemies";
 import { CardTypes, PlayerActionMessage } from "@/lib/actions/playerActions";
 import { Shop } from "./shop";
+import { useIdToken } from "react-firebase-hooks/auth";
+import { auth } from "@/lib/auth/firebase";
 
 export default function Game() {
   // const lobbyId = await params
+  const [user, loading, error] = useIdToken(auth);
   const [count, setCount] = useState(5);
   const { sendMessage, gameState, roundState, endTurnTime } = useGameData();
   const enemiesPlayerData = gameState?.players.map((p) => {
@@ -49,6 +52,8 @@ export default function Game() {
     console.log("roundStateChanged", endTurnTime);
   }, [roundState]);
 
+  if(!user) return;
+
   return (
     <main
       // onContextMenu={e=>e.preventDefault()}
@@ -74,19 +79,19 @@ export default function Game() {
       )}
       <div className="absolute bottom-0 w-screen p-5">
         <PlayerControls
-          active={roundState?.currentPlayer == "RAFAEL"}
+          active={roundState?.currentPlayer == user?.uid}
           alive={
-            roundState?.players.find((p) => p.id == "RAFAEL")?.alive || false
+            roundState?.players.find((p) => p.id == user?.uid)?.alive || false
           }
           cards={roundState?.cards}
           turn={roundState?.turn || 0}
           chamberPosition={
-            gameState?.players?.find((p) => p.userId == "RAFAEL")
+            gameState?.players?.find((p) => p.userId == user?.uid)
               ?.currentChamber
           }
           playCards={playCards}
           doubt={doubt}
-          onShoot={() => shoot("RAFAEL")}
+          onShoot={() => shoot(user!.uid)}
         />
       </div>
       <Shop />
