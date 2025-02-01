@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "motion/react";
 import { useState } from "react";
-import { Cylinder } from "./cylinder";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   ContextMenu,
@@ -96,10 +95,7 @@ export const EnnemyPLayer = (props: EnnemyPLayerLeftProps) => {
                   );
                 })}
             </motion.div>
-            <Avatar
-              onClick={() => {}}
-              className={`relative size-20 ${scaleX} bg-white`}
-            >
+            <Avatar onClick={() => {}} className={`relative size-20 ${scaleX} bg-white`}>
               <AvatarImage src={props.avatarUrl} />
               <AvatarFallback>{props.avatarName}</AvatarFallback>
               <div className="absolute w-full h-full" />
