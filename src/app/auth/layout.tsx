@@ -7,9 +7,5 @@ export default function Home({
 }: Readonly<{ children: React.ReactNode }>) {
   // const lobbyId = await params
   const params = useParams();
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

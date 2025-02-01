@@ -1,7 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { auth } from "@/lib/auth/firebase";
-import { signInAnonymously } from "firebase/auth";
-import Image from "next/image";
 
 export default function Home() {
     
@@ -21,7 +17,6 @@ export default function Home() {
                 </ol>
 
                 <div className="flex gap-4 items-center flex-col sm:flex-row">
-                    <Button onClick={()=>signInAnonymously(auth)}>Sign in anonymously</Button>
 
                 </div>
             </main> 

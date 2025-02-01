@@ -18,17 +18,20 @@ export const ServerActionTypeEnum = {
   GAME_STATE: "GAME_STATE",
 } as const;
 
-export type ServerActionType = typeof ServerActionTypeEnum[keyof typeof ServerActionTypeEnum];
+export type ServerActionType =
+  (typeof ServerActionTypeEnum)[keyof typeof ServerActionTypeEnum];
 
 export type ServerActionData = {
   [ServerActionTypeEnum.CHAT_MESSAGE]: { message: string };
-  [ServerActionTypeEnum.LOBBY_PLAYERS]: { players: { id: UserId, name: string, ready: boolean }[] };
+  [ServerActionTypeEnum.LOBBY_PLAYERS]: {
+    players: { id: UserId; name: string; ready: boolean }[];
+  };
   [ServerActionTypeEnum.GAME_STARTED]: {};
   [ServerActionTypeEnum.TURN_STARTED]: { playerTurn: UserId };
   [ServerActionTypeEnum.PLAY_CARDS]: { cardCount: number };
   [ServerActionTypeEnum.REVEAL_DECK_CARDS]: { cards: CardTypes[] };
-  [ServerActionTypeEnum.SHOOT_GUN]: { target: UserId, died: boolean };
-  [ServerActionTypeEnum.STEAL_CARD]: { target: UserId, cardIndex: number };
+  [ServerActionTypeEnum.SHOOT_GUN]: { target: UserId; died: boolean };
+  [ServerActionTypeEnum.STEAL_CARD]: { target: UserId; cardIndex: number };
   [ServerActionTypeEnum.PLAYER_DATA_UPDATED]: { name: string };
   [ServerActionTypeEnum.GAME_ENDED]: { winner: UserId };
   [ServerActionTypeEnum.TURN_MID_TIME_REACHED]: { turnEndTime: number };
@@ -50,37 +53,35 @@ export type ServerActionMessage = {
 }[ServerActionType];
 
 export type PlayerData = {
-  id: UserId,
-  cardCount: number,
-  alive: boolean
-}
+  id: UserId;
+  cardCount: number;
+  alive: boolean;
+};
 
 export type RoundState = {
-  cards: CardTypes[],
-  cardType: CardTypes,
-  round: number,
-  turn: number,
-  currentPlayer: string,
-  players: PlayerData[]
-}
+  cards: CardTypes[];
+  cardType: CardTypes;
+  round: number;
+  turn: number;
+  currentPlayer: string;
+  players: PlayerData[];
+};
 
 export interface GamePlayerData {
   alive: boolean;
   userId: string;
   playerIdx: number;
   connected: boolean;
-  currentChamber: number
+  currentChamber: number;
 }
 
 export type GameState = {
   active: boolean;
   store: Item[];
   players: GamePlayerData[];
-
-}
-
+};
 
 export interface Item {
-  name: string
-  cost: [number, number]
+  name: string;
+  cost: [number, number];
 }

@@ -32,7 +32,7 @@ export type UserId = string;
 
 export type PlayerActionData = {
     [PlayerActionTypeEnum.CHAT_MESSAGE]: { message: string };
-    [PlayerActionTypeEnum.VOTE_START]: {},
+    [PlayerActionTypeEnum.VOTE_START]: { ready: boolean },
     [PlayerActionTypeEnum.BUY_ITEM]: { item: string },
     [PlayerActionTypeEnum.USE_ITEM]: { target: UserId, item: string },
     [PlayerActionTypeEnum.PLAY_CARDS]: { cards: CardTypes[] };
@@ -78,8 +78,9 @@ const ChatMessageSchema = z.object({
 
 const VoteStartSchema = z.object({
     type: z.literal(PlayerActionTypeEnum.VOTE_START),
-    payload: z.object({}),
+    payload: z.object({ ready: z.boolean() }),
 });
+
 const DoubtSchema = z.object({
     type: z.literal(PlayerActionTypeEnum.DOUBT),
     payload: z.object({}),
@@ -114,10 +115,13 @@ const PlayerDataUpdatedSchema = z.object({
     }),
 });
 
+
 const BuyItemSchema = z.object({ item: z.string() });
 
-const UseItemSchema = z.object({ target: z.string(), item: z.string() })
+const UseItemSchema = z.object({ target: z.string(), item: z.string() });
 
+
+// Union schema for all message types
 export const PlayerActionMessageSchema = z.union([
     ChatMessageSchema,
     PlayCardsSchema,

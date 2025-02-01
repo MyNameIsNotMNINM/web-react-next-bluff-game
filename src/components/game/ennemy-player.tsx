@@ -96,7 +96,10 @@ export const EnnemyPLayer = (props: EnnemyPLayerLeftProps) => {
                   );
                 })}
             </motion.div>
-            <Avatar onClick={() => {}} className={`relative size-20 ${scaleX} bg-white`}>
+            <Avatar
+              onClick={() => {}}
+              className={`relative size-20 ${scaleX} bg-white`}
+            >
               <AvatarImage src={props.avatarUrl} />
               <AvatarFallback>{props.avatarName}</AvatarFallback>
               <div className="absolute w-full h-full" />

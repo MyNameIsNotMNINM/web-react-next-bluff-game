@@ -52,7 +52,7 @@ export default function Game() {
     console.log("roundStateChanged", endTurnTime);
   }, [roundState]);
 
-  if(!user) return;
+  if (!user) return;
 
   return (
     <main

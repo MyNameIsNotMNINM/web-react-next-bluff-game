@@ -1,5 +1,10 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInAnonymously } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInAnonymously,
+} from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 
 // const firebaseConfig = {
@@ -13,15 +18,14 @@ import { getAnalytics } from "firebase/analytics";
 // };
 
 const firebaseConfig = {
-    apiKey: "AIzaSyB8i-6m8kDH9yCZ8Jm7xqJjyr1Qlh6aLTM",
-    authDomain: "bluff-game-435ba.firebaseapp.com",
-    projectId: "bluff-game-435ba",
-    storageBucket: "bluff-game-435ba.firebasestorage.app",
-    messagingSenderId: "717389137270",
-    appId: "1:717389137270:web:1d88a463442a8ef22c6657",
-    measurementId: "G-HW1VFYE255"
-  };
-  
+  apiKey: "AIzaSyB8i-6m8kDH9yCZ8Jm7xqJjyr1Qlh6aLTM",
+  authDomain: "bluff-game-435ba.firebaseapp.com",
+  projectId: "bluff-game-435ba",
+  storageBucket: "bluff-game-435ba.firebasestorage.app",
+  messagingSenderId: "717389137270",
+  appId: "1:717389137270:web:1d88a463442a8ef22c6657",
+  measurementId: "G-HW1VFYE255",
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

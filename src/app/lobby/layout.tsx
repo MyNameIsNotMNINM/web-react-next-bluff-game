@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
 export default function Home({
-    children,
+  children,
 }: Readonly<{ children: React.ReactNode }>) {
-    return (
+  return (
     <>
-        { children }
-    </>
-    );
+        {children}
+    </>);
 }
